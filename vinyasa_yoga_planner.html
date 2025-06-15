@@ -1,0 +1,2117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="theme-color" content="#ff8c42">
+    <meta name="description" content="Professional Vinyasa Yoga Class Planning Tool for Teachers">
+    <meta name="keywords" content="yoga, vinyasa, class planning, teacher tools, asana sequencing">
+    
+    <!-- Security Headers -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob:; connect-src 'self' https:;">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIlZpbnlhc2EgRmxvdyBDbGFzcyBQbGFubmVyIiwKICAic2hvcnRfbmFtZSI6ICJZb2dhUGxhbm5lciIsCiAgImRlc2NyaXB0aW9uIjogIlByb2Zlc3Npb25hbCB2aW55YXNhIHlvZ2EgY2xhc3MgcGxhbm5pbmcgdG9vbCIsCiAgInN0YXJ0X3VybCI6ICIvIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjZmY4YzQyIiwKICAidGhlbWVfY29sb3IiOiAiI2ZmOGM0MiIsCiAgImljb25zIjogWwogICAgewogICAgICAic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjNhV1IwYUQwaU1USTRJaUIzYVdSMGFEMGlNVEk0SWlCMmFXVjNRbTk0UFNJd0lEQWdNVEk0SURBNE1USTRJaUJtYVd4c1BTSWpabVk0WXpReUlpQjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaVBqeGphV0pzWlNCamVEMGlOalFpSUdONVBTSTBNVFlpSUhJOUlqTXlJaUJtYVd4c1BTSWpabVptSWo0OEwyTnBjbXhsUGp3dmMzWm5QZz09IiwKICAgICAgInNpemVzIjogIjEyOHgxMjgiLAogICAgICAidHlwZSI6ICJpbWFnZS9zdmcreG1sIgogICAgfQogIF0KfQ==">
+    
+    <!-- iOS PWA Support -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="YogaPlanner">
+    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTI4IiBoZWlnaHQ9IjEyOCIgdmlld0JveD0iMCAwIDEyOCAwIDEyOCIgZmlsbD0iI2ZmOGM0MiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSI2NCIgY3k9IjQxNiIgcj0iMzIiIGZpbGw9IiNmZmYiLz48L3N2Zz4=">
+
+    <title>Vinyasa Flow Class Planner - Professional Yoga Teaching Tool</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ff8c42 0%, #ff6b35 100%);
+            min-height: 100vh;
+            color: #333;
+            touch-action: manipulation;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #ff8c42;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .class-info {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .class-info input, .class-info select {
+            padding: 8px 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .class-info input:focus, .class-info select:focus {
+            border-color: #ff8c42;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 140, 66, 0.1);
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            min-height: 44px; /* Touch-friendly */
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ff8c42, #ff6b35);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #333;
+            border: 2px solid #e0e0e0;
+        }
+
+        .btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 280px 1fr 280px;
+            gap: 20px;
+            height: calc(100vh - 180px);
+        }
+
+        .sidebar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px;
+            overflow-y: auto;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .sequence-builder {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px;
+            overflow-y: auto;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .pose-details {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px;
+            overflow-y: auto;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .pose-category {
+            margin-bottom: 20px;
+        }
+
+        .category-header {
+            background: linear-gradient(135deg, #ff8c42, #ff6b35);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 44px;
+        }
+
+        .pose-list {
+            display: grid;
+            gap: 8px;
+        }
+
+        .pose-item {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            padding: 12px;
+            border-radius: 10px;
+            cursor: grab;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 44px;
+            touch-action: none;
+        }
+
+        .pose-item:hover {
+            border-color: #ff8c42;
+            background: #fff5f0;
+            transform: translateY(-1px);
+        }
+
+        .pose-item:active {
+            cursor: grabbing;
+        }
+
+        .pose-name {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .pose-sanskrit {
+            font-size: 12px;
+            color: #666;
+            font-style: italic;
+        }
+
+        .pose-duration {
+            background: #ff8c42;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .sequence-area {
+            min-height: 500px;
+            max-height: calc(100vh - 450px);
+            border: 3px dashed #ccc;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            overflow-y: auto;
+        }
+
+        .sequence-area.drag-over {
+            border-color: #ff8c42;
+            background: rgba(255, 140, 66, 0.05);
+        }
+
+        .sequence-item {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            cursor: move;
+            touch-action: none;
+        }
+
+        .sequence-item:hover {
+            border-color: #ff8c42;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .sequence-item.dragging {
+            opacity: 0.5;
+        }
+
+        .sequence-item-content {
+            flex: 1;
+        }
+
+        .sequence-item-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .duration-input {
+            width: 60px;
+            padding: 4px 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+            min-height: 32px;
+        }
+
+        .remove-btn, .move-btn {
+            background: #ff4757;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            min-height: 32px;
+        }
+
+        .move-btn {
+            background: #ff8c42;
+            margin-right: 5px;
+        }
+
+        .pose-detail-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .pose-detail-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .pose-detail-sanskrit {
+            color: #666;
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+
+        .pose-detail-section {
+            margin-bottom: 15px;
+        }
+
+        .pose-detail-section h4 {
+            color: #ff8c42;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .pose-detail-section p {
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .stats-bar {
+            display: flex;
+            gap: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+            flex: 1;
+        }
+
+        .stat-value {
+            font-size: 20px;
+            font-weight: bold;
+            color: #ff8c42;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            text-transform: uppercase;
+        }
+
+        .templates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .template-card {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            min-height: 44px;
+        }
+
+        .template-card:hover {
+            border-color: #ff8c42;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .template-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .template-duration {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 10px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            min-height: 44px;
+        }
+
+        .search-box:focus {
+            border-color: #ff8c42;
+            outline: none;
+        }
+
+        .breathing-cue {
+            background: linear-gradient(135deg, #a8e6cf, #7fcdcd);
+            color: #2d5a27;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 5px;
+        }
+
+        .difficulty-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .difficulty-beginner {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .difficulty-intermediate {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .difficulty-advanced {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .tab-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tab-btn {
+            padding: 8px 16px;
+            border: 2px solid #e0e0e0;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-height: 44px;
+        }
+
+        .tab-btn.active {
+            background: #ff8c42;
+            color: white;
+            border-color: #ff8c42;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .saved-classes-tab {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .saved-class-item {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .saved-class-item:hover {
+            border-color: #ff8c42;
+            transform: translateY(-1px);
+        }
+
+        .saved-class-info h4 {
+            margin-bottom: 4px;
+            color: #333;
+        }
+
+        .saved-class-info p {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .saved-class-actions {
+            display: flex;
+            gap: 5px;
+        }
+
+        .small-btn {
+            padding: 4px 8px;
+            font-size: 12px;
+            border-radius: 4px;
+            min-height: 32px;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4caf50;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.error {
+            background: #f44336;
+        }
+
+        /* Mobile Optimizations */
+        @media (max-width: 1200px) {
+            .main-content {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .sidebar, .pose-details {
+                max-height: 400px;
+            }
+
+            .header-content {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .class-info {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .header {
+                padding: 15px;
+                border-radius: 15px;
+            }
+
+            .logo {
+                font-size: 24px;
+            }
+
+            .btn {
+                padding: 8px 16px;
+                font-size: 13px;
+            }
+
+            .main-content {
+                height: auto;
+                min-height: calc(100vh - 200px);
+            }
+
+            .sidebar, .sequence-builder, .pose-details {
+                border-radius: 15px;
+                padding: 15px;
+            }
+
+            .sequence-area {
+                min-height: 300px;
+                max-height: none;
+            }
+
+            .pose-item, .sequence-item {
+                padding: 10px;
+            }
+
+            .templates-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Touch gestures for mobile */
+        @media (hover: none) and (pointer: coarse) {
+            .pose-item:hover, .sequence-item:hover, .template-card:hover {
+                transform: none;
+            }
+            
+            .pose-item:active, .sequence-item:active, .template-card:active {
+                transform: scale(0.98);
+            }
+        }
+
+        /* Offline indicator */
+        .offline-indicator {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: #f44336;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            z-index: 1000;
+            display: none;
+        }
+
+        /* Loading spinner */
+        .loading {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #ff8c42;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 8px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    🧘‍♀️ Vinyasa Flow Planner
+                    <span id="onlineStatus" style="font-size: 12px; color: #4caf50;">●</span>
+                </div>
+                <div class="class-info">
+                    <input type="text" id="className" placeholder="Class Name" value="Morning Flow" maxlength="50">
+                    <select id="classLevel">
+                        <option value="beginner">Beginner</option>
+                        <option value="intermediate">Intermediate</option>
+                        <option value="advanced">Advanced</option>
+                        <option value="mixed">Mixed Level</option>
+                    </select>
+                    <input type="number" id="classDuration" min="15" max="120" value="60" style="width: 80px;">
+                    <span>minutes</span>
+                </div>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <button class="btn btn-secondary" onclick="saveClass()">💾 Save</button>
+                    <button class="btn btn-secondary" onclick="exportToPDF()">📄 Export</button>
+                    <button class="btn btn-secondary" onclick="exportToJSON()">📋 Backup</button>
+                    <button class="btn btn-primary" onclick="generateSmartSequence()">✨ Smart Sequence</button>
+                </div>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <aside class="sidebar">
+                <div class="tab-buttons">
+                    <button class="tab-btn active" onclick="switchTab('poses')">Poses</button>
+                    <button class="tab-btn" onclick="switchTab('templates')">Templates</button>
+                    <button class="tab-btn" onclick="switchTab('saved')">Saved</button>
+                </div>
+
+                <div id="poses-tab" class="tab-content active">
+                    <input type="text" class="search-box" id="poseSearch" placeholder="Search poses..." oninput="filterPoses()">
+                    
+                    <div class="pose-category">
+                        <div class="category-header" onclick="toggleCategory('warmup')">
+                            🌅 Warm-up & Centering <span id="warmup-toggle">−</span>
+                        </div>
+                        <div class="pose-list" id="warmup-poses"></div>
+                    </div>
+
+                    <div class="pose-category">
+                        <div class="category-header" onclick="toggleCategory('standing')">
+                            🏃‍♀️ Standing Poses <span id="standing-toggle">−</span>
+                        </div>
+                        <div class="pose-list" id="standing-poses"></div>
+                    </div>
+
+                    <div class="pose-category">
+                        <div class="category-header" onclick="toggleCategory('strength')">
+                            💪 Strength & Core <span id="strength-toggle">−</span>
+                        </div>
+                        <div class="pose-list" id="strength-poses"></div>
+                    </div>
+
+                    <div class="pose-category">
+                        <div class="category-header" onclick="toggleCategory('seated')">
+                            🪑 Seated & Floor <span id="seated-toggle">−</span>
+                        </div>
+                        <div class="pose-list" id="seated-poses"></div>
+                    </div>
+
+                    <div class="pose-category">
+                        <div class="category-header" onclick="toggleCategory('restorative')">
+                            🌙 Restorative & Cool Down <span id="restorative-toggle">−</span>
+                        </div>
+                        <div class="pose-list" id="restorative-poses"></div>
+                    </div>
+                </div>
+
+                <div id="templates-tab" class="tab-content">
+                    <div class="section-title">🎯 Class Templates</div>
+                    <div class="templates-grid" id="templatesGrid"></div>
+                </div>
+
+                <div id="saved-tab" class="tab-content">
+                    <div class="section-title">💾 Saved Classes</div>
+                    <div class="saved-classes-tab" id="savedClassesList"></div>
+                    <button class="btn btn-secondary" onclick="importFromJSON()" style="width: 100%; margin-top: 10px;">
+                        📥 Import Backup
+                    </button>
+                    <input type="file" id="importFile" accept=".json" style="display: none;" onchange="handleImport(event)">
+                </div>
+            </aside>
+
+            <main class="sequence-builder">
+                <div class="section-title">🔄 Your Vinyasa Sequence</div>
+                
+                <div class="stats-bar">
+                    <div class="stat-item">
+                        <div class="stat-value" id="totalTime">0</div>
+                        <div class="stat-label">Minutes</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="poseCount">0</div>
+                        <div class="stat-label">Poses</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="strengthRatio">0%</div>
+                        <div class="stat-label">Strength</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="mindfulRatio">0%</div>
+                        <div class="stat-label">Mindful</div>
+                    </div>
+                </div>
+
+                <div class="sequence-area" id="sequenceArea" ondrop="drop(event)" ondragover="allowDrop(event)">
+                    <p style="text-align: center; color: #999; font-style: italic;">
+                        Drag poses here to build your sequence, or click "Smart Sequence" for AI suggestions
+                    </p>
+                </div>
+
+                <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                    <button class="btn btn-secondary" onclick="clearSequence()">🗑️ Clear All</button>
+                    <button class="btn btn-primary" onclick="balanceSequence()">⚖️ Balance Flow</button>
+                    <button class="btn btn-secondary" onclick="duplicateSequence()">📋 Duplicate</button>
+                </div>
+            </main>
+
+            <aside class="pose-details">
+                <div class="section-title">📋 Pose Details</div>
+                <div id="poseDetailsContent">
+                    <p style="text-align: center; color: #999; font-style: italic; margin-top: 50px;">
+                        Click on a pose to see detailed instructions, cues, and modifications
+                    </p>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <!-- Notification container -->
+    <div id="notification" class="notification"></div>
+    
+    <!-- Offline indicator -->
+    <div id="offlineIndicator" class="offline-indicator">
+        📡 Offline - Changes saved locally
+    </div>
+
+    <script>
+        // Enhanced pose database with validation
+        const poseDatabase = {
+            warmup: [
+                {
+                    name: "Easy Pose",
+                    sanskrit: "Sukhasana",
+                    duration: 2,
+                    difficulty: "beginner",
+                    type: "mindful",
+                    breathing: "Deep belly breathing",
+                    cues: "Sit tall, shoulders relaxed, hands on knees",
+                    modifications: "Sit on blanket or cushion for comfort",
+                    assists: "Gentle hands on shoulders to encourage grounding",
+                    contraindications: "Knee injuries - use chair"
+                },
+                {
+                    name: "Cat-Cow Stretch",
+                    sanskrit: "Marjaryasana-Bitilasana",
+                    duration: 2,
+                    difficulty: "beginner",
+                    type: "mindful",
+                    breathing: "Inhale cow, exhale cat",
+                    cues: "Move with breath, initiate from tailbone",
+                    modifications: "Place blanket under knees",
+                    assists: "Light touch on sacrum to guide movement",
+                    contraindications: "Wrist injuries - use forearms"
+                },
+                {
+                    name: "Sun Salutation A",
+                    sanskrit: "Surya Namaskara A",
+                    duration: 3,
+                    difficulty: "beginner",
+                    type: "strength",
+                    breathing: "One breath per movement",
+                    cues: "Flow with breath, strong through core",
+                    modifications: "Step back/forward instead of jumping",
+                    assists: "Support in forward fold, alignment cues",
+                    contraindications: "High blood pressure - avoid inversions"
+                }
+            ],
+            standing: [
+                {
+                    name: "Mountain Pose",
+                    sanskrit: "Tadasana",
+                    duration: 1,
+                    difficulty: "beginner",
+                    type: "mindful",
+                    breathing: "Steady, deep breaths",
+                    cues: "Root down through feet, crown reaches up",
+                    modifications: "Back against wall for alignment",
+                    assists: "Gentle adjustment of shoulders and head",
+                    contraindications: "Balance issues - use wall support"
+                },
+                {
+                    name: "Warrior I",
+                    sanskrit: "Virabhadrasana I",
+                    duration: 1.5,
+                    difficulty: "beginner",
+                    type: "strength",
+                    breathing: "Strong, steady breathing",
+                    cues: "Front thigh parallel, back leg straight",
+                    modifications: "Hands on hips instead of overhead",
+                    assists: "Support front thigh, adjust back foot",
+                    contraindications: "Hip injuries - reduce stance width"
+                },
+                {
+                    name: "Warrior II",
+                    sanskrit: "Virabhadrasana II",
+                    duration: 1.5,
+                    difficulty: "beginner",
+                    type: "strength",
+                    breathing: "Breath of fire optional",
+                    cues: "Thigh parallel, gaze over front fingertips",
+                    modifications: "Place block under front thigh",
+                    assists: "Adjust shoulder alignment, support pose",
+                    contraindications: "Knee injuries - reduce bend"
+                },
+                {
+                    name: "Tree Pose",
+                    sanskrit: "Vrikshasana",
+                    duration: 1,
+                    difficulty: "intermediate",
+                    type: "mindful",
+                    breathing: "Focus on steady breath for balance",
+                    cues: "Press foot into leg, avoid knee placement",
+                    modifications: "Toe to floor, heel to ankle",
+                    assists: "Offer arm for balance, wall support",
+                    contraindications: "Ankle injuries - use wall support"
+                },
+                {
+                    name: "Extended Side Angle",
+                    sanskrit: "Utthita Parsvakonasana",
+                    duration: 1.5,
+                    difficulty: "intermediate",
+                    type: "strength",
+                    breathing: "Deep breathing through side body",
+                    cues: "Long line from back heel to top fingertips",
+                    modifications: "Hand to block or forearm to thigh",
+                    assists: "Support top arm, encourage length",
+                    contraindications: "Lower back issues - avoid deep side bend"
+                }
+            ],
+            strength: [
+                {
+                    name: "Plank Pose",
+                    sanskrit: "Phalakasana",
+                    duration: 1,
+                    difficulty: "intermediate",
+                    type: "strength",
+                    breathing: "Strong breath through nose",
+                    cues: "Straight line from head to heels",
+                    modifications: "Knees down, or forearms down",
+                    assists: "Support hips, encourage engagement",
+                    contraindications: "Wrist injuries - use forearms"
+                },
+                {
+                    name: "Chaturanga",
+                    sanskrit: "Chaturanga Dandasana",
+                    duration: 0.5,
+                    difficulty: "intermediate",
+                    type: "strength",
+                    breathing: "Controlled exhale",
+                    cues: "Elbows close to ribs, hover low",
+                    modifications: "Lower knees first, or skip",
+                    assists: "Support shoulders, guide elbow alignment",
+                    contraindications: "Shoulder injuries - modify or skip"
+                },
+                {
+                    name: "Crow Pose",
+                    sanskrit: "Bakasana",
+                    duration: 1,
+                    difficulty: "advanced",
+                    type: "strength",
+                    breathing: "Steady breath, no holding",
+                    cues: "Weight forward, squeeze arms with knees",
+                    modifications: "Forehead on block, feet on ground",
+                    assists: "Support forehead, encourage weight shift",
+                    contraindications: "Wrist or elbow injuries"
+                },
+                {
+                    name: "Side Plank",
+                    sanskrit: "Vasisthasana",
+                    duration: 1,
+                    difficulty: "intermediate",
+                    type: "strength",
+                    breathing: "Strong, steady breathing",
+                    cues: "Stack shoulders, engage core",
+                    modifications: "Bottom knee down, top hand to hip",
+                    assists: "Support hips, encourage alignment",
+                    contraindications: "Wrist or shoulder injuries"
+                }
+            ],
+            seated: [
+                {
+                    name: "Seated Forward Fold",
+                    sanskrit: "Paschimottanasana",
+                    duration: 2,
+                    difficulty: "beginner",
+                    type: "mindful",
+                    breathing: "Deep, calming breaths",
+                    cues: "Fold from hips, keep spine long",
+                    modifications: "Bend knees, use strap around feet",
+                    assists: "Gentle pressure on sacrum",
+                    contraindications: "Lower back injuries - keep knees bent"
+                },
+                {
+                    name: "Bound Angle Pose",
+                    sanskrit: "Baddha Konasana",
+                    duration: 2,
+                    difficulty: "beginner",
+                    type: "mindful",
+                    breathing: "Breath into hip opening",
+                    cues: "Sit tall, gentle forward fold option",
+                    modifications: "Sit on blanket, blocks under knees",
+                    assists: "Support knees, encourage tall spine",
+                    contraindications: "Hip or knee injuries - use props"
+                },
+                {
+                    name: "Boat Pose",
+                    sanskrit: "Navasana",
+                    duration: 1,
+                    difficulty: "intermediate",
+                    type: "strength",
+                    breathing: "Strong breath through core work",
+                    cues: "Lift through crown, balance on sit bones",
+                    modifications: "Hold behind thighs, keep knees bent",
+                    assists: "Support back, encourage lift",
+                    contraindications: "Lower back issues - keep knees bent"
+                },
+                {
+                    name: "Seated Spinal Twist",
+                    sanskrit: "Ardha Matsyendrasana",
+                    duration: 1.5,
+                    difficulty: "intermediate",
+                    type: "mindful",
+                    breathing: "Breathe into the twist",
+                    cues: "Lengthen on inhale, twist on exhale",
+                    modifications: "Sit on blanket, simple crossed legs",
+                    assists: "Support back, gentle twist assistance",
+                    contraindications: "Spinal injuries - gentle twist only"
+                }
+            ],
+            restorative: [
+                {
+                    name: "Child's Pose",
+                    sanskrit: "Balasana",
+                    duration: 3,
+                    difficulty: "beginner",
+                    type: "mindful",
+                    breathing: "Deep belly breathing",
+                    cues: "Surrender, rest completely",
+                    modifications: "Pillow between calves and thighs",
+                    assists: "Gentle pressure on sacrum or back",
+                    contraindications: "Knee injuries - use props"
+                },
+                {
+                    name: "Supine Twist",
+                    sanskrit: "Supta Matsyendrasana",
+                    duration: 2,
+                    difficulty: "beginner",
+                    type: "mindful",
+                    breathing: "Breath into the twist",
+                    cues: "Keep shoulders grounded",
+                    modifications: "Pillow between legs",
+                    assists: "Support knees, keep shoulders down",
+                    contraindications: "Spinal injuries - minimal twist"
+                },
+                {
+                    name: "Legs Up Wall",
+                    sanskrit: "Viparita Karani",
+                    duration: 5,
+                    difficulty: "beginner",
+                    type: "mindful",
+                    breathing: "Natural, restorative breathing",
+                    cues: "Let legs be heavy, soften completely",
+                    modifications: "Bolster under lower back",
+                    assists: "Arrange props, minimal adjustment",
+                    contraindications: "Glaucoma - avoid inversion"
+                },
+                {
+                    name: "Savasana",
+                    sanskrit: "Savasana",
+                    duration: 5,
+                    difficulty: "beginner",
+                    type: "mindful",
+                    breathing: "Natural, effortless breath",
+                    cues: "Complete relaxation, let go fully",
+                    modifications: "Bolster under knees, eye pillow",
+                    assists: "Minimal - check in quietly",
+                    contraindications: "Anxiety - keep eyes slightly open"
+                }
+            ]
+        };
+
+        // Enhanced class templates
+        const classTemplates = [
+            {
+                name: "Gentle Flow",
+                duration: 45,
+                level: "beginner",
+                description: "Slow, mindful flow perfect for beginners",
+                sequence: ["Easy Pose", "Cat-Cow Stretch", "Mountain Pose", "Seated Forward Fold", "Child's Pose", "Savasana"]
+            },
+            {
+                name: "Power Flow",
+                duration: 60,
+                level: "intermediate",
+                description: "Dynamic sequence building strength and heat",
+                sequence: ["Sun Salutation A", "Warrior I", "Warrior II", "Plank Pose", "Chaturanga", "Boat Pose", "Savasana"]
+            },
+            {
+                name: "Restorative Evening",
+                duration: 75,
+                level: "beginner",
+                description: "Calming practice for deep relaxation",
+                sequence: ["Easy Pose", "Child's Pose", "Bound Angle Pose", "Supine Twist", "Legs Up Wall", "Savasana"]
+            },
+            {
+                name: "Core & Balance",
+                duration: 50,
+                level: "intermediate",
+                description: "Focus on core strength and balance",
+                sequence: ["Mountain Pose", "Tree Pose", "Warrior II", "Side Plank", "Boat Pose", "Seated Spinal Twist", "Savasana"]
+            },
+            {
+                name: "Morning Energizer",
+                duration: 30,
+                level: "mixed",
+                description: "Quick energizing flow to start the day",
+                sequence: ["Easy Pose", "Cat-Cow Stretch", "Sun Salutation A", "Warrior I", "Mountain Pose", "Child's Pose"]
+            }
+        ];
+
+        let currentSequence = [];
+        let selectedPose = null;
+        let draggedItem = null;
+        let touchStartY = 0;
+        let touchStartX = 0;
+
+        // App state management
+        const appState = {
+            isOnline: navigator.onLine,
+            lastSaved: null,
+            hasUnsavedChanges: false
+        };
+
+        // Initialize the app
+        function initializeApp() {
+            renderPoses();
+            renderTemplates();
+            renderSavedClasses();
+            updateStats();
+            setupServiceWorker();
+            setupOfflineHandling();
+            setupMobileOptimizations();
+            loadAutoSave();
+        }
+
+        // Service Worker for PWA functionality
+        function setupServiceWorker() {
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('data:text/javascript;base64,c2VsZi5hZGRFdmVudExpc3RlbmVyKCdpbnN0YWxsJywgZXZlbnQgPT4gewogIGNvbnNvbGUubG9nKCdTZXJ2aWNlIFdvcmtlciBpbnN0YWxsZWQnKTsKfSk7CgpzZWxmLmFkZEV2ZW50TGlzdGVuZXIoJ2ZldGNoJywgZXZlbnQgPT4gewogIC8vIEJhc2ljIGNhY2hpbmcgc3RyYXRlZ3kKfSk7')
+                .then(registration => {
+                    console.log('SW registered: ', registration);
+                })
+                .catch(registrationError => {
+                    console.log('SW registration failed: ', registrationError);
+                });
+            }
+        }
+
+        // Offline handling
+        function setupOfflineHandling() {
+            window.addEventListener('online', () => {
+                appState.isOnline = true;
+                document.getElementById('onlineStatus').style.color = '#4caf50';
+                document.getElementById('onlineStatus').textContent = '●';
+                document.getElementById('offlineIndicator').style.display = 'none';
+                showNotification('🌐 Back online!', 'success');
+            });
+
+            window.addEventListener('offline', () => {
+                appState.isOnline = false;
+                document.getElementById('onlineStatus').style.color = '#f44336';
+                document.getElementById('onlineStatus').textContent = '●';
+                document.getElementById('offlineIndicator').style.display = 'block';
+                showNotification('📡 Offline mode - changes saved locally', 'info');
+            });
+        }
+
+        // Mobile optimizations
+        function setupMobileOptimizations() {
+            // Touch event handling for sequence reordering
+            document.addEventListener('touchstart', handleTouchStart, { passive: true });
+            document.addEventListener('touchmove', handleTouchMove, { passive: false });
+            document.addEventListener('touchend', handleTouchEnd, { passive: true });
+
+            // Prevent zoom on double tap for better UX
+            let lastTouchEnd = 0;
+            document.addEventListener('touchend', function (event) {
+                const now = (new Date()).getTime();
+                if (now - lastTouchEnd <= 300) {
+                    event.preventDefault();
+                }
+                lastTouchEnd = now;
+            }, false);
+        }
+
+        // Touch handling for mobile
+        function handleTouchStart(e) {
+            if (e.target.closest('.sequence-item')) {
+                touchStartY = e.touches[0].clientY;
+                touchStartX = e.touches[0].clientX;
+                draggedItem = e.target.closest('.sequence-item');
+            }
+        }
+
+        function handleTouchMove(e) {
+            if (!draggedItem) return;
+            
+            const touchY = e.touches[0].clientY;
+            const touchX = e.touches[0].clientX;
+            const deltaY = touchY - touchStartY;
+            const deltaX = touchX - touchStartX;
+            
+            // Only handle vertical movement
+            if (Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) > 10) {
+                e.preventDefault();
+                draggedItem.style.transform = `translateY(${deltaY}px)`;
+                draggedItem.classList.add('dragging');
+            }
+        }
+
+        function handleTouchEnd(e) {
+            if (draggedItem) {
+                draggedItem.style.transform = '';
+                draggedItem.classList.remove('dragging');
+                draggedItem = null;
+            }
+        }
+
+        // Enhanced notification system
+        function showNotification(message, type = 'success', duration = 3000) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = `notification ${type} show`;
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, duration);
+        }
+
+        // Input validation and sanitization
+        function sanitizeInput(input) {
+            return input.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+                       .replace(/[<>]/g, '')
+                       .trim();
+        }
+
+        function validateClassData(data) {
+            const errors = [];
+            
+            if (!data.name || data.name.length < 1) {
+                errors.push('Class name is required');
+            }
+            
+            if (data.duration < 15 || data.duration > 120) {
+                errors.push('Duration must be between 15-120 minutes');
+            }
+            
+            if (!data.sequence || data.sequence.length === 0) {
+                errors.push('Sequence cannot be empty');
+            }
+            
+            return errors;
+        }
+
+        // Enhanced local storage with encryption-like encoding
+        function saveToStorage(key, data) {
+            try {
+                const encoded = btoa(JSON.stringify(data));
+                localStorage.setItem(key, encoded);
+                return true;
+            } catch (error) {
+                console.error('Storage error:', error);
+                showNotification('Storage full - please export your data', 'error');
+                return false;
+            }
+        }
+
+        function loadFromStorage(key) {
+            try {
+                const encoded = localStorage.getItem(key);
+                return encoded ? JSON.parse(atob(encoded)) : null;
+            } catch (error) {
+                console.error('Load error:', error);
+                return null;
+            }
+        }
+
+        // Auto-save functionality
+        function autoSave() {
+            if (currentSequence.length > 0) {
+                const autoSaveData = {
+                    name: document.getElementById('className').value,
+                    level: document.getElementById('classLevel').value,
+                    duration: document.getElementById('classDuration').value,
+                    sequence: currentSequence,
+                    timestamp: new Date().toISOString()
+                };
+                
+                saveToStorage('yoga_autosave', autoSaveData);
+                appState.lastSaved = new Date();
+                appState.hasUnsavedChanges = false;
+            }
+        }
+
+        function loadAutoSave() {
+            const autoSaved = loadFromStorage('yoga_autosave');
+            if (autoSaved && autoSaved.sequence.length > 0) {
+                if (confirm('Found auto-saved work. Would you like to restore it?')) {
+                    document.getElementById('className').value = autoSaved.name;
+                    document.getElementById('classLevel').value = autoSaved.level;
+                    document.getElementById('classDuration').value = autoSaved.duration;
+                    currentSequence = autoSaved.sequence;
+                    renderSequence();
+                    updateStats();
+                    showNotification('Auto-saved class restored', 'success');
+                }
+            }
+        }
+
+        // Set up auto-save interval
+        setInterval(autoSave, 30000); // Auto-save every 30 seconds
+
+        // Render poses in categories
+        function renderPoses() {
+            Object.keys(poseDatabase).forEach(category => {
+                const container = document.getElementById(`${category}-poses`);
+                container.innerHTML = '';
+                
+                poseDatabase[category].forEach(pose => {
+                    const poseElement = createPoseElement(pose);
+                    container.appendChild(poseElement);
+                });
+            });
+        }
+
+        // Create pose element with enhanced features
+        function createPoseElement(pose) {
+            const div = document.createElement('div');
+            div.className = 'pose-item';
+            div.draggable = true;
+            div.onclick = () => showPoseDetails(pose);
+            div.ondragstart = (e) => {
+                e.dataTransfer.setData('text/plain', JSON.stringify(pose));
+            };
+
+            // Add accessibility
+            div.setAttribute('role', 'button');
+            div.setAttribute('tabindex', '0');
+            div.setAttribute('aria-label', `Add ${pose.name} to sequence`);
+
+            div.innerHTML = `
+                <div>
+                    <div class="pose-name">${pose.name}</div>
+                    <div class="pose-sanskrit">${pose.sanskrit}</div>
+                    <div class="difficulty-badge difficulty-${pose.difficulty}">${pose.difficulty}</div>
+                </div>
+                <div class="pose-duration">${pose.duration}min</div>
+            `;
+
+            // Keyboard accessibility
+            div.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    addPoseToSequence(pose);
+                    showNotification(`Added ${pose.name} to sequence`, 'success', 2000);
+                }
+            });
+
+            return div;
+        }
+
+        // Enhanced templates rendering
+        function renderTemplates() {
+            const container = document.getElementById('templatesGrid');
+            container.innerHTML = '';
+
+            classTemplates.forEach(template => {
+                const div = document.createElement('div');
+                div.className = 'template-card';
+                div.onclick = () => loadTemplate(template);
+                
+                div.innerHTML = `
+                    <div class="template-name">${template.name}</div>
+                    <div class="template-duration">${template.duration} min • ${template.level}</div>
+                    <div style="font-size: 12px; color: #666; margin-top: 5px;">${template.description}</div>
+                `;
+                
+                container.appendChild(div);
+            });
+        }
+
+        // Render saved classes
+        function renderSavedClasses() {
+            const container = document.getElementById('savedClassesList');
+            const savedClasses = loadFromStorage('yoga_saved_classes') || [];
+            
+            container.innerHTML = '';
+            
+            if (savedClasses.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #999; font-style: italic;">No saved classes yet</p>';
+                return;
+            }
+
+            savedClasses.forEach((savedClass, index) => {
+                const div = document.createElement('div');
+                div.className = 'saved-class-item';
+                
+                const date = new Date(savedClass.timestamp).toLocaleDateString();
+                
+                div.innerHTML = `
+                    <div class="saved-class-info">
+                        <h4>${savedClass.name}</h4>
+                        <p>${savedClass.level} • ${savedClass.duration}min • ${savedClass.sequence.length} poses</p>
+                        <p style="font-size: 11px;">Saved: ${date}</p>
+                    </div>
+                    <div class="saved-class-actions">
+                        <button class="btn btn-primary small-btn" onclick="loadSavedClass(${index})">Load</button>
+                        <button class="btn btn-secondary small-btn" onclick="deleteSavedClass(${index})">Delete</button>
+                    </div>
+                `;
+                
+                container.appendChild(div);
+            });
+        }
+
+        // Load saved class
+        function loadSavedClass(index) {
+            const savedClasses = loadFromStorage('yoga_saved_classes') || [];
+            const savedClass = savedClasses[index];
+            
+            if (savedClass) {
+                document.getElementById('className').value = savedClass.name;
+                document.getElementById('classLevel').value = savedClass.level;
+                document.getElementById('classDuration').value = savedClass.duration;
+                currentSequence = [...savedClass.sequence];
+                renderSequence();
+                updateStats();
+                showNotification(`Loaded "${savedClass.name}"`, 'success');
+            }
+        }
+
+        // Delete saved class
+        function deleteSavedClass(index) {
+            if (confirm('Delete this saved class?')) {
+                const savedClasses = loadFromStorage('yoga_saved_classes') || [];
+                savedClasses.splice(index, 1);
+                saveToStorage('yoga_saved_classes', savedClasses);
+                renderSavedClasses();
+                showNotification('Class deleted', 'success');
+            }
+        }
+
+        // Enhanced drag and drop
+        function allowDrop(e) {
+            e.preventDefault();
+            document.getElementById('sequenceArea').classList.add('drag-over');
+        }
+
+        function drop(e) {
+            e.preventDefault();
+            document.getElementById('sequenceArea').classList.remove('drag-over');
+            
+            const poseData = JSON.parse(e.dataTransfer.getData('text/plain'));
+            addPoseToSequence(poseData);
+        }
+
+        // Add pose to sequence with validation
+        function addPoseToSequence(pose) {
+            // Validate pose addition
+            const currentDuration = currentSequence.reduce((sum, p) => sum + p.customDuration, 0);
+            const targetDuration = parseInt(document.getElementById('classDuration').value);
+            
+            if (currentDuration + pose.duration > targetDuration + 10) {
+                if (!confirm(`Adding this pose will exceed your target duration by ${(currentDuration + pose.duration - targetDuration).toFixed(1)} minutes. Continue?`)) {
+                    return;
+                }
+            }
+
+            const sequenceItem = {
+                ...pose,
+                id: Date.now() + Math.random(),
+                customDuration: pose.duration
+            };
+            
+            currentSequence.push(sequenceItem);
+            renderSequence();
+            updateStats();
+            appState.hasUnsavedChanges = true;
+            showNotification(`Added ${pose.name}`, 'success', 2000);
+        }
+
+        // Enhanced sequence rendering
+        function renderSequence() {
+            const container = document.getElementById('sequenceArea');
+            
+            if (currentSequence.length === 0) {
+                container.innerHTML = `
+                    <p style="text-align: center; color: #999; font-style: italic;">
+                        Drag poses here to build your sequence, or click "Smart Sequence" for AI suggestions
+                    </p>
+                `;
+                return;
+            }
+
+            container.innerHTML = '';
+            
+            currentSequence.forEach((pose, index) => {
+                const div = document.createElement('div');
+                div.className = 'sequence-item';
+                div.draggable = true;
+                
+                div.ondragstart = (e) => {
+                    e.dataTransfer.setData('text/plain', index.toString());
+                };
+                
+                div.ondragover = (e) => {
+                    e.preventDefault();
+                };
+                
+                div.ondrop = (e) => {
+                    e.preventDefault();
+                    const draggedIndex = parseInt(e.dataTransfer.getData('text/plain'));
+                    if (draggedIndex !== index) {
+                        reorderSequence(draggedIndex, index);
+                    }
+                };
+                
+                div.innerHTML = `
+                    <div class="sequence-item-content">
+                        <div class="pose-name">${pose.name}</div>
+                        <div class="pose-sanskrit">${pose.sanskrit}</div>
+                        <div class="breathing-cue">${pose.breathing}</div>
+                        ${pose.contraindications ? `<div style="font-size: 11px; color: #f44336; margin-top: 2px;">⚠️ ${pose.contraindications}</div>` : ''}
+                    </div>
+                    <div class="sequence-item-controls">
+                        <button class="move-btn" onclick="moveUp(${index})" ${index === 0 ? 'disabled' : ''}>↑</button>
+                        <button class="move-btn" onclick="moveDown(${index})" ${index === currentSequence.length - 1 ? 'disabled' : ''}>↓</button>
+                        <input type="number" class="duration-input" value="${pose.customDuration}" 
+                               min="0.5" max="10" step="0.5" 
+                               onchange="updatePoseDuration(${index}, this.value)">
+                        <span style="font-size: 12px; color: #666;">min</span>
+                        <button class="remove-btn" onclick="removePoseFromSequence(${index})">×</button>
+                    </div>
+                `;
+                
+                div.onclick = () => showPoseDetails(pose);
+                container.appendChild(div);
+            });
+        }
+
+        // Sequence reordering functions
+        function reorderSequence(fromIndex, toIndex) {
+            const item = currentSequence.splice(fromIndex, 1)[0];
+            currentSequence.splice(toIndex, 0, item);
+            renderSequence();
+            updateStats();
+            appState.hasUnsavedChanges = true;
+        }
+
+        function moveUp(index) {
+            if (index > 0) {
+                reorderSequence(index, index - 1);
+            }
+        }
+
+        function moveDown(index) {
+            if (index < currentSequence.length - 1) {
+                reorderSequence(index, index + 1);
+            }
+        }
+
+        // Update pose duration with validation
+        function updatePoseDuration(index, newDuration) {
+            const duration = parseFloat(newDuration);
+            if (duration >= 0.5 && duration <= 10) {
+                currentSequence[index].customDuration = duration;
+                updateStats();
+                appState.hasUnsavedChanges = true;
+            }
+        }
+
+        // Remove pose from sequence
+        function removePoseFromSequence(index) {
+            const poseName = currentSequence[index].name;
+            currentSequence.splice(index, 1);
+            renderSequence();
+            updateStats();
+            appState.hasUnsavedChanges = true;
+            showNotification(`Removed ${poseName}`, 'success', 2000);
+        }
+
+        // Enhanced statistics with safety warnings
+        function updateStats() {
+            const totalTime = currentSequence.reduce((sum, pose) => sum + pose.customDuration, 0);
+            const poseCount = currentSequence.length;
+            const strengthPoses = currentSequence.filter(pose => pose.type === 'strength').length;
+            const mindfulPoses = currentSequence.filter(pose => pose.type === 'mindful').length;
+            
+            const strengthRatio = poseCount > 0 ? Math.round((strengthPoses / poseCount) * 100) : 0;
+            const mindfulRatio = poseCount > 0 ? Math.round((mindfulPoses / poseCount) * 100) : 0;
+            
+            // Safety validation
+            const targetTime = parseInt(document.getElementById('classDuration').value);
+            const timeDiff = totalTime - targetTime;
+
+            document.getElementById('totalTime').textContent = totalTime.toFixed(1);
+            document.getElementById('poseCount').textContent = poseCount;
+            document.getElementById('strengthRatio').textContent = strengthRatio + '%';
+            document.getElementById('mindfulRatio').textContent = mindfulRatio + '%';
+            
+            // Color code based on target
+            const totalTimeEl = document.getElementById('totalTime');
+            if (timeDiff > 5) {
+                totalTimeEl.style.color = '#f44336';
+            } else if (timeDiff < -5) {
+                totalTimeEl.style.color = '#ff9800';
+            } else {
+                totalTimeEl.style.color = '#ff8c42';
+            }
+        }
+
+        // Enhanced pose details with safety information
+        function showPoseDetails(pose) {
+            selectedPose = pose;
+            const container = document.getElementById('poseDetailsContent');
+            
+            container.innerHTML = `
+                <div class="pose-detail-card">
+                    <div class="pose-detail-title">${pose.name}</div>
+                    <div class="pose-detail-sanskrit">${pose.sanskrit}</div>
+                    
+                    <div class="pose-detail-section">
+                        <h4>🫁 Breathing</h4>
+                        <p>${pose.breathing}</p>
+                    </div>
+                    
+                    <div class="pose-detail-section">
+                        <h4>🎯 Teaching Cues</h4>
+                        <p>${pose.cues}</p>
+                    </div>
+                    
+                    <div class="pose-detail-section">
+                        <h4>🔧 Modifications</h4>
+                        <p>${pose.modifications}</p>
+                    </div>
+                    
+                    <div class="pose-detail-section">
+                        <h4>🤝 Assists</h4>
+                        <p>${pose.assists}</p>
+                    </div>
+                    
+                    ${pose.contraindications ? `
+                    <div class="pose-detail-section">
+                        <h4 style="color: #f44336;">⚠️ Contraindications</h4>
+                        <p style="color: #f44336;">${pose.contraindications}</p>
+                    </div>
+                    ` : ''}
+                    
+                    <div style="display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap;">
+                        <span class="difficulty-badge difficulty-${pose.difficulty}">${pose.difficulty}</span>
+                        <span class="difficulty-badge" style="background: ${pose.type === 'strength' ? '#ffeb3b' : '#e1f5fe'}; color: #333;">
+                            ${pose.type}
+                        </span>
+                        <button class="btn btn-primary small-btn" onclick="addPoseToSequence(selectedPose)">
+                            ➕ Add to Sequence
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Enhanced smart sequence generation
+        function generateSmartSequence() {
+            const targetDuration = parseInt(document.getElementById('classDuration').value);
+            const level = document.getElementById('classLevel').value;
+            
+            if (currentSequence.length > 0) {
+                if (!confirm('This will replace your current sequence. Continue?')) {
+                    return;
+                }
+            }
+            
+            showNotification('Generating smart sequence...', 'info', 2000);
+            
+            currentSequence = [];
+            
+            // Enhanced sequencing logic with safety considerations
+            const sequenceStructure = {
+                warmup: Math.floor(targetDuration * 0.15), // 15% warmup
+                standing: Math.floor(targetDuration * 0.30), // 30% standing
+                strength: Math.floor(targetDuration * 0.25), // 25% strength
+                seated: Math.floor(targetDuration * 0.20), // 20% seated
+                restorative: Math.floor(targetDuration * 0.10) // 10% cool down
+            };
+
+            // Filter poses by level and safety
+            Object.keys(sequenceStructure).forEach(category => {
+                const timeAllotted = sequenceStructure[category];
+                let availablePoses = poseDatabase[category].filter(pose => {
+                    if (level === 'mixed') return true;
+                    if (level === 'beginner') return pose.difficulty === 'beginner';
+                    if (level === 'intermediate') return pose.difficulty === 'beginner' || pose.difficulty === 'intermediate';
+                    if (level === 'advanced') return true;
+                    return false;
+                });
+                
+                let currentTime = 0;
+                let attempts = 0;
+                
+                while (currentTime < timeAllotted && availablePoses.length > 0 && attempts < 10) {
+                    const randomPose = availablePoses[Math.floor(Math.random() * availablePoses.length)];
+                    const poseItem = {
+                        ...randomPose,
+                        id: Date.now() + Math.random() + attempts,
+                        customDuration: randomPose.duration
+                    };
+                    
+                    if (currentTime + poseItem.customDuration <= timeAllotted + 2) {
+                        currentSequence.push(poseItem);
+                        currentTime += poseItem.customDuration;
+                        // Remove used pose to avoid duplicates in same section
+                        availablePoses = availablePoses.filter(p => p.name !== randomPose.name);
+                    }
+                    attempts++;
+                }
+            });
+
+            renderSequence();
+            updateStats();
+            appState.hasUnsavedChanges = true;
+            
+            const actualDuration = currentSequence.reduce((sum, pose) => sum + pose.customDuration, 0);
+            showNotification(`✨ Smart sequence generated! ${actualDuration.toFixed(1)}-minute ${level} class with ${currentSequence.length} poses.`, 'success', 4000);
+        }
+
+        // Enhanced balance analysis
+        function balanceSequence() {
+            if (currentSequence.length === 0) {
+                showNotification('Add some poses to your sequence first!', 'error');
+                return;
+            }
+
+            const strengthPoses = currentSequence.filter(pose => pose.type === 'strength').length;
+            const mindfulPoses = currentSequence.filter(pose => pose.type === 'mindful').length;
+            const total = currentSequence.length;
+            
+            const strengthRatio = strengthPoses / total;
+            const mindfulRatio = mindfulPoses / total;
+            
+            let message = '⚖️ Sequence Analysis:\n\n';
+            let suggestions = [];
+            
+            // Balance analysis
+            if (strengthRatio > 0.6) {
+                message += '💪 High strength focus - consider adding more mindful poses\n';
+                suggestions.push('Add restorative poses like Child\'s Pose or Seated Forward Fold');
+            } else if (strengthRatio < 0.3) {
+                message += '🧘‍♀️ High mindfulness focus - consider adding strength poses\n';
+                suggestions.push('Add strengthening poses like Plank or Warrior poses');
+            } else {
+                message += '✅ Good balance between strength and mindfulness\n';
+            }
+            
+            // Timing analysis
+            const totalTime = currentSequence.reduce((sum, pose) => sum + pose.customDuration, 0);
+            const targetTime = parseInt(document.getElementById('classDuration').value);
+            
+            if (totalTime < targetTime - 5) {
+                message += `⏱️ Sequence is ${(targetTime - totalTime).toFixed(1)} minutes short\n`;
+                suggestions.push('Add more poses or increase individual pose durations');
+            } else if (totalTime > targetTime + 5) {
+                message += `⏱️ Sequence is ${(totalTime - targetTime).toFixed(1)} minutes over\n`;
+                suggestions.push('Remove poses or decrease individual pose durations');
+            } else {
+                message += '✅ Good timing for target duration\n';
+            }
+            
+            // Safety analysis
+            const advancedPoses = currentSequence.filter(pose => pose.difficulty === 'advanced').length;
+            const classLevel = document.getElementById('classLevel').value;
+            
+            if (advancedPoses > 0 && classLevel === 'beginner') {
+                message += '⚠️ Advanced poses detected in beginner class\n';
+                suggestions.push('Consider replacing advanced poses with beginner alternatives');
+            }
+            
+            // Sequence flow analysis
+            const categories = currentSequence.map(pose => {
+                return Object.keys(poseDatabase).find(cat => 
+                    poseDatabase[cat].some(p => p.name === pose.name)
+                );
+            });
+            
+            if (suggestions.length > 0) {
+                message += '\n💡 Suggestions:\n' + suggestions.map(s => `• ${s}`).join('\n');
+            }
+            
+            alert(message);
+        }
+
+        // Duplicate sequence
+        function duplicateSequence() {
+            if (currentSequence.length === 0) {
+                showNotification('No sequence to duplicate', 'error');
+                return;
+            }
+            
+            const newName = prompt('Enter name for duplicated class:', document.getElementById('className').value + ' (Copy)');
+            if (newName) {
+                const duplicatedClass = {
+                    name: sanitizeInput(newName),
+                    level: document.getElementById('classLevel').value,
+                    duration: document.getElementById('classDuration').value,
+                    sequence: currentSequence.map(pose => ({...pose, id: Date.now() + Math.random()})),
+                    timestamp: new Date().toISOString()
+                };
+                
+                const savedClasses = loadFromStorage('yoga_saved_classes') || [];
+                savedClasses.push(duplicatedClass);
+                saveToStorage('yoga_saved_classes', savedClasses);
+                renderSavedClasses();
+                showNotification(`Duplicated as "${newName}"`, 'success');
+            }
+        }
+
+        // Enhanced save with validation
+        function saveClass() {
+            const className = sanitizeInput(document.getElementById('className').value);
+            const classLevel = document.getElementById('classLevel').value;
+            const classDuration = parseInt(document.getElementById('classDuration').value);
+            
+            const classData = {
+                name: className,
+                level: classLevel,
+                duration: classDuration,
+                sequence: currentSequence,
+                timestamp: new Date().toISOString()
+            };
+            
+            // Validate class data
+            const errors = validateClassData(classData);
+            if (errors.length > 0) {
+                showNotification('Error: ' + errors.join(', '), 'error');
+                return;
+            }
+            
+            const savedClasses = loadFromStorage('yoga_saved_classes') || [];
+            
+            // Check for duplicate names
+            const existingIndex = savedClasses.findIndex(c => c.name === className);
+            if (existingIndex !== -1) {
+                if (confirm(`A class named "${className}" already exists. Overwrite it?`)) {
+                    savedClasses[existingIndex] = classData;
+                } else {
+                    return;
+                }
+            } else {
+                savedClasses.push(classData);
+            }
+            
+            if (saveToStorage('yoga_saved_classes', savedClasses)) {
+                renderSavedClasses();
+                appState.hasUnsavedChanges = false;
+                showNotification(`💾 Class "${className}" saved successfully!`, 'success');
+            }
+        }
+
+        // Enhanced PDF export
+        function exportToPDF() {
+            const className = sanitizeInput(document.getElementById('className').value);
+            const level = document.getElementById('classLevel').value;
+            const duration = document.getElementById('classDuration').value;
+            
+            if (currentSequence.length === 0) {
+                showNotification('No sequence to export', 'error');
+                return;
+            }
+            
+            let pdfContent = `VINYASA YOGA CLASS PLAN\n`;
+            pdfContent += `${'='.repeat(50)}\n\n`;
+            pdfContent += `Class: ${className}\n`;
+            pdfContent += `Level: ${level}\n`;
+            pdfContent += `Duration: ${duration} minutes\n`;
+            pdfContent += `Total Poses: ${currentSequence.length}\n`;
+            pdfContent += `Generated: ${new Date().toLocaleDateString()}\n\n`;
+            
+            const totalTime = currentSequence.reduce((sum, pose) => sum + pose.customDuration, 0);
+            const strengthPoses = currentSequence.filter(pose => pose.type === 'strength').length;
+            const mindfulPoses = currentSequence.filter(pose => pose.type === 'mindful').length;
+            
+            pdfContent += `SEQUENCE OVERVIEW:\n`;
+            pdfContent += `-`.repeat(30) + `\n`;
+            pdfContent += `Total Time: ${totalTime.toFixed(1)} minutes\n`;
+            pdfContent += `Strength Focus: ${Math.round((strengthPoses / currentSequence.length) * 100)}%\n`;
+            pdfContent += `Mindful Focus: ${Math.round((mindfulPoses / currentSequence.length) * 100)}%\n\n`;
+            
+            pdfContent += `DETAILED SEQUENCE:\n`;
+            pdfContent += `${'='.repeat(50)}\n\n`;
+            
+            currentSequence.forEach((pose, index) => {
+                pdfContent += `${index + 1}. ${pose.name} (${pose.sanskrit})\n`;
+                pdfContent += `   Duration: ${pose.customDuration} minutes | Type: ${pose.type} | Level: ${pose.difficulty}\n`;
+                pdfContent += `   Breathing: ${pose.breathing}\n`;
+                pdfContent += `   Cues: ${pose.cues}\n`;
+                pdfContent += `   Modifications: ${pose.modifications}\n`;
+                pdfContent += `   Assists: ${pose.assists}\n`;
+                if (pose.contraindications) {
+                    pdfContent += `   ⚠️ Contraindications: ${pose.contraindications}\n`;
+                }
+                pdfContent += `\n`;
+            });
+            
+            pdfContent += `\nCLASS NOTES:\n`;
+            pdfContent += `-`.repeat(30) + `\n`;
+            pdfContent += `• Check for injuries before class\n`;
+            pdfContent += `• Encourage students to listen to their bodies\n`;
+            pdfContent += `• Offer modifications as needed\n`;
+            pdfContent += `• Maintain awareness of room temperature and energy\n\n`;
+            
+            pdfContent += `Generated by Vinyasa Flow Class Planner\n`;
+            pdfContent += `https://your-yoga-app.com\n`;
+            
+            try {
+                const blob = new Blob([pdfContent], { type: 'text/plain;charset=utf-8' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `${className.replace(/\s+/g, '_')}_yoga_class_${new Date().toISOString().split('T')[0]}.txt`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                showNotification('📄 Class plan exported successfully!', 'success');
+            } catch (error) {
+                showNotification('Export failed. Please try again.', 'error');
+            }
+        }
+
+        // JSON backup export
+        function exportToJSON() {
+            const backupData = {
+                savedClasses: loadFromStorage('yoga_saved_classes') || [],
+                currentClass: {
+                    name: document.getElementById('className').value,
+                    level: document.getElementById('classLevel').value,
+                    duration: document.getElementById('classDuration').value,
+                    sequence: currentSequence
+                },
+                exportDate: new Date().toISOString(),
+                version: '1.0'
+            };
+            
+            try {
+                const blob = new Blob([JSON.stringify(backupData, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `yoga_planner_backup_${new Date().toISOString().split('T')[0]}.json`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                showNotification('📋 Backup exported successfully!', 'success');
+            } catch (error) {
+                showNotification('Backup export failed', 'error');
+            }
+        }
+
+        // Import from JSON
+        function importFromJSON() {
+            document.getElementById('importFile').click();
+        }
+
+        function handleImport(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const backupData = JSON.parse(e.target.result);
+                    
+                    if (backupData.savedClasses) {
+                        const currentSaved = loadFromStorage('yoga_saved_classes') || [];
+                        const mergedClasses = [...currentSaved];
+                        
+                        backupData.savedClasses.forEach(importedClass => {
+                            const existingIndex = mergedClasses.findIndex(c => c.name === importedClass.name);
+                            if (existingIndex === -1) {
+                                mergedClasses.push(importedClass);
+                            }
+                        });
+                        
+                        saveToStorage('yoga_saved_classes', mergedClasses);
+                        renderSavedClasses();
+                        showNotification(`📥 Imported ${backupData.savedClasses.length} classes`, 'success');
+                    }
+                } catch (error) {
+                    showNotification('Invalid backup file format', 'error');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        // Clear sequence with confirmation
+        function clearSequence() {
+            if (currentSequence.length === 0) return;
+            
+            if (confirm('Clear all poses from your sequence?')) {
+                currentSequence = [];
+                renderSequence();
+                updateStats();
+                appState.hasUnsavedChanges = true;
+                showNotification('Sequence cleared', 'success');
+            }
+        }
+
+        // Filter poses with enhanced search
+        function filterPoses() {
+            const searchTerm = document.getElementById('poseSearch').value.toLowerCase();
+            const poseItems = document.querySelectorAll('.pose-item');
+            
+            poseItems.forEach(item => {
+                const poseName = item.querySelector('.pose-name').textContent.toLowerCase();
+                const sanskrit = item.querySelector('.pose-sanskrit').textContent.toLowerCase();
+                const difficulty = item.querySelector('.difficulty-badge').textContent.toLowerCase();
+                
+                if (poseName.includes(searchTerm) || 
+                    sanskrit.includes(searchTerm) || 
+                    difficulty.includes(searchTerm)) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // Toggle category visibility
+        function toggleCategory(category) {
+            const poseList = document.getElementById(`${category}-poses`);
+            const toggle = document.getElementById(`${category}-toggle`);
+            
+            if (poseList.style.display === 'none') {
+                poseList.style.display = 'grid';
+                toggle.textContent = '−';
+            } else {
+                poseList.style.display = 'none';
+                toggle.textContent = '+';
+            }
+        }
+
+        // Switch tabs
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            document.getElementById(`${tabName}-tab`).classList.add('active');
+            
+            if (tabName === 'saved') {
+                renderSavedClasses();
+            }
+        }
+
+        // Load template with enhanced features
+        function loadTemplate(template) {
+            if (currentSequence.length > 0 && appState.hasUnsavedChanges) {
+                if (!confirm(`Load "${template.name}" template? This will replace your current sequence and any unsaved changes will be lost.`)) {
+                    return;
+                }
+            }
+            
+            currentSequence = [];
+            
+            template.sequence.forEach(poseName => {
+                let foundPose = null;
+                Object.values(poseDatabase).forEach(category => {
+                    const pose = category.find(p => p.name === poseName);
+                    if (pose) foundPose = pose;
+                });
+                
+                if (foundPose) {
+                    const poseItem = {
+                        ...foundPose,
+                        id: Date.now() + Math.random(),
+                        customDuration: foundPose.duration
+                    };
+                    currentSequence.push(poseItem);
+                }
+            });
+            
+            document.getElementById('classDuration').value = template.duration;
+            document.getElementById('classLevel').value = template.level;
+            document.getElementById('className').value = template.name;
+            
+            renderSequence();
+            updateStats();
+            appState.hasUnsavedChanges = true;
+            showNotification(`Loaded template: ${template.name}`, 'success');
+        }
+
+        // Prevent dragover on sequence area from bubbling
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeApp();
+            
+            const sequenceArea = document.getElementById('sequenceArea');
+            sequenceArea.addEventListener('dragleave', function(e) {
+                if (!this.contains(e.relatedTarget)) {
+                    this.classList.remove('drag-over');
+                }
+            });
+            
+            // Warn before leaving if there are unsaved changes
+            window.addEventListener('beforeunload', function(e) {
+                if (appState.hasUnsavedChanges) {
+                    e.preventDefault();
+                    e.returnValue = '';
+                }
+            });
+        });
+
+        // Install PWA prompt
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            showNotification('📱 Install this app for offline use!', 'info', 5000);
+        });
+    </script>
+</body>
+</html>
